@@ -5,11 +5,10 @@ import { WhisperEntity } from '../entity/whisper.entity';
 
 export default {
   koa: {
-    port: null,
+    port: 7000,
   },
   typeorm: {
     dataSource: {
-      timezone: '+08:00',
       default: {
         type: 'mysql',
         host: process.env.MYSQL_HOST,
@@ -17,7 +16,7 @@ export default {
         username: 'root',
         password: process.env.MYSQL_PWD,
         database: 'midway',
-        synchronize: false,
+        synchronize: true,
         entities: [UserEntity, TaskEntity, WhisperEntity],
       },
     },
