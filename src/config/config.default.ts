@@ -31,4 +31,22 @@ export default {
       },
     },
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: '2d',
+  },
+  passport: {
+    session: false,
+  },
+  app: {
+    security: {
+      prefix: '/api',
+      ignore: ['/api/login'],
+    },
+  },
+  swagger: {
+    auth: {
+      authType: 'bearer',
+    },
+  },
 } as MidwayConfig;

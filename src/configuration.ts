@@ -13,10 +13,15 @@ import * as redis from '@midwayjs/redis';
 import * as axios from '@midwayjs/axios';
 import * as dotenv from 'dotenv';
 import * as lodash from 'lodash';
+import * as jwt from '@midwayjs/jwt';
+import * as passport from '@midwayjs/passport';
 import { IMidwayContainer } from '@midwayjs/core';
 import { join } from 'path';
+
 import { ReportMiddleware } from './middleware/report.middleware';
-// import { DefaultErrorFilter, UserEmptyDataError } from './filter/default.filter';
+import { FormatMiddleware } from './middleware/format.middleware';
+// import { DefaultErrorFilter } from './filter/default.filter';
+// import { UserEmptyDataError } from './filter/user.filter';
 // import { NotFoundFilter } from './filter/notfound.filter';
 
 dotenv.config();
@@ -34,6 +39,8 @@ dotenv.config();
     task,
     redis,
     axios,
+    jwt,
+    passport,
     {
       component: info,
       enabledEnvironment: ['local'],
@@ -50,17 +57,17 @@ export class ContainerLifeCycle {
   async onReady(container: IMidwayContainer) {
     container.registerObject('lodash', lodash);
 
-    // add middleware
-    this.app.useMiddleware([ReportMiddleware]);
-    // add filter
+    this.app.useMiddleware([FormatMiddleware, ReportMiddleware]);
     // this.app.useFilter([NotFoundFilter, DefaultErrorFilter, UserEmptyDataError]);
-    // axios interceptors
+
+    // default axios interceptors
     const httpService = await container.getAsync(axios.HttpService);
     httpService.interceptors.request.use(
       config => config,
       error => Promise.reject(error)
     );
 
+    // other axios interceptors
     const httpServiceFactory = await container.getAsync(
       axios.HttpServiceFactory
     );

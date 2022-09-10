@@ -28,7 +28,7 @@ describe('test/controller/home.test.ts', () => {
       .post('/api/user/create')
       .send(o);
     expect(result.status).toBe(200);
-    o = result.body;
+    o = result.body.data;
   });
 
   // findById
