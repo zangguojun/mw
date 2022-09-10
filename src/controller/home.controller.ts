@@ -12,4 +12,9 @@ export class HomeController {
       text: 'world',
     });
   }
+
+  @Get('/hello')
+  async hello(): Promise<string> {
+    return 'hello world';
+  }
 }

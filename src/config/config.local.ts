@@ -6,13 +6,12 @@ import { WhisperEntity } from '../entity/whisper.entity';
 export default {
   typeorm: {
     dataSource: {
-      timezone: '+08:00',
       default: {
         type: 'mysql',
-        host: 'localhost',
+        host: process.env.MYSQL_HOST,
         port: 3306,
         username: 'root',
-        password: '',
+        password: process.env.MYSQL_PWD,
         database: 'midway',
         synchronize: true,
         entities: [UserEntity, TaskEntity, WhisperEntity],

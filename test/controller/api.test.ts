@@ -4,7 +4,12 @@ import { Application, Framework } from '@midwayjs/koa';
 describe('test/controller/home.test.ts', () => {
   let app: Application;
   beforeAll(async () => {
-    app = await createApp<Framework>();
+    try {
+      app = await createApp<Framework>();
+    } catch (err) {
+      console.error('test beforeAll error', err);
+      throw err;
+    }
   });
 
   afterAll(async () => {
@@ -14,8 +19,7 @@ describe('test/controller/home.test.ts', () => {
   it('should GET /api/get_user with success request', async () => {
     const result = await createHttpRequest(app)
       .get('/api/get_user')
-      .query({ uid: 123 });
-
+      .query({ name: 'buchiyu' });
     expect(result.status).toBe(200);
     expect(result.body.message).toBe('OK');
   });
@@ -23,9 +27,17 @@ describe('test/controller/home.test.ts', () => {
   it('should GET /api/get_user with fail request', async () => {
     const result = await createHttpRequest(app)
       .get('/api/get_user')
-      .query({ uid: 123 });
+      .query({ name: 123 });
 
-    expect(result.status).toBe(301);
+    expect(result.status).toBe(200);
     expect(result.body.message).toBe('OK');
+    expect(result.body.data).toBe('hello worldnull');
+  });
+
+  it('should POST /api/add_user with same key error', async () => {
+    const result = await createHttpRequest(app)
+      .post('/api/add_user')
+      .send({ name: 'buchiyu' });
+    expect(result.status).toBe(500);
   });
 });

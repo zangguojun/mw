@@ -12,10 +12,10 @@ export default {
       timezone: '+08:00',
       default: {
         type: 'mysql',
-        host: 'localhost',
+        host: process.env.MYSQL_HOST,
         port: 3306,
         username: 'root',
-        password: '',
+        password: process.env.MYSQL_PWD,
         database: 'midway',
         synchronize: false,
         entities: [UserEntity, TaskEntity, WhisperEntity],

@@ -11,13 +11,15 @@ import * as swagger from '@midwayjs/swagger';
 import * as task from '@midwayjs/task';
 import * as redis from '@midwayjs/redis';
 import * as axios from '@midwayjs/axios';
-
+import * as dotenv from 'dotenv';
+import * as lodash from 'lodash';
 import { IMidwayContainer } from '@midwayjs/core';
-
 import { join } from 'path';
 import { ReportMiddleware } from './middleware/report.middleware';
 // import { DefaultErrorFilter, UserEmptyDataError } from './filter/default.filter';
 // import { NotFoundFilter } from './filter/notfound.filter';
+
+dotenv.config();
 
 @Configuration({
   imports: [
@@ -43,7 +45,11 @@ export class ContainerLifeCycle {
   @App()
   app: koa.Application;
 
+  async onConfigLoad() {}
+
   async onReady(container: IMidwayContainer) {
+    container.registerObject('lodash', lodash);
+
     // add middleware
     this.app.useMiddleware([ReportMiddleware]);
     // add filter
