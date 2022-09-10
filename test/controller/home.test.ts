@@ -18,7 +18,6 @@ describe('test/controller/home.test.ts', () => {
 
   it('should GET /hello with success request', async () => {
     const result = await createHttpRequest(app).get('/hello');
-
     expect(result.status).toBe(200);
     expect(result.text).toBe('hello world');
   });

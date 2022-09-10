@@ -1,21 +1,12 @@
-import {
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  CreateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { WhisperEntity } from './whisper.entity';
+import { BaseEntity } from '../common/base.entity';
 
 /**
  * 用户
  */
 @Entity('base_sys_shuo')
-export class UserEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
-
+export class UserEntity extends BaseEntity {
   @Column({ comment: '昵称', unique: true })
   name: string;
 
@@ -30,12 +21,6 @@ export class UserEntity {
 
   @Column({ comment: '状态 0:禁用 1：启用', default: 1, type: 'tinyint' })
   status: number;
-
-  @UpdateDateColumn({ name: 'gmt_modified', type: 'timestamp' })
-  gmtModified: Date;
-
-  @CreateDateColumn({ name: 'gmt_create', type: 'timestamp' })
-  gmtCreate: Date;
 
   @OneToMany(() => WhisperEntity, whisper => whisper.user)
   whispers: WhisperEntity[];

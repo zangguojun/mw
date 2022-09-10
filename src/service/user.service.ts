@@ -4,11 +4,16 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '../entity/user.entity';
 import { UserEmptyDataError } from '../error/user.error';
 import { IUserOptions } from '../interface';
+import { BaseService } from '../common/base.service';
 
 @Provide()
-export class UserService {
+export class UserService extends BaseService<UserEntity> {
   @InjectEntityModel(UserEntity)
   userModel: Repository<UserEntity>;
+
+  getModel(): Repository<UserEntity> {
+    return this.userModel;
+  }
 
   async getUser(user: IUserOptions) {
     try {
