@@ -1,0 +1,10 @@
+logs/
+node_modules/
+package-lock.json
+dist/
+.idea/
+run/
+*.sw*
+*.un~
+.tsbuildinfo
+.tsbuildinfo.*

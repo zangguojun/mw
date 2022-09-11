@@ -1,14 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { UserEntity } from './user.entity';
+import { BaseEntity } from '../common/base.entity';
 
 /**
  * 用户
  */
 @Entity('base_sys_whisper')
-export class WhisperEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
-
+export class WhisperEntity extends BaseEntity {
   @Column({ comment: '邮箱', type: 'tinytext' })
   content: string;
 
