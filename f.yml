@@ -19,7 +19,7 @@ deployType:
 
 custom:
   customDomain:
-    domainName: auto # auto:需要使用自动域名
+    domainName: auto
 
 functions:
   apis:
