@@ -7,7 +7,7 @@ import * as orm from '@midwayjs/typeorm';
 import * as view from '@midwayjs/view-ejs';
 import * as proxy from '@midwayjs/http-proxy';
 import * as crossDomain from '@midwayjs/cross-domain';
-import * as swagger from '@midwayjs/swagger';
+// import * as swagger from '@midwayjs/swagger';
 import * as task from '@midwayjs/task';
 import * as redis from '@midwayjs/redis';
 import * as axios from '@midwayjs/axios';
@@ -15,6 +15,7 @@ import * as dotenv from 'dotenv';
 import * as lodash from 'lodash';
 import * as jwt from '@midwayjs/jwt';
 import * as passport from '@midwayjs/passport';
+import * as upload from '@midwayjs/upload';
 import { IMidwayContainer } from '@midwayjs/core';
 import { join } from 'path';
 
@@ -35,12 +36,16 @@ dotenv.config();
     view,
     proxy,
     crossDomain,
-    swagger,
     task,
     redis,
     axios,
     jwt,
     passport,
+    upload,
+    // {
+    //   component: swagger,
+    //   enabledEnvironment: ['local'],
+    // },
     {
       component: info,
       enabledEnvironment: ['local'],

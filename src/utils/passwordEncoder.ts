@@ -1,5 +1,4 @@
-// src/utils/PasswordEncoder.ts
-const bcrypt = require('bcryptjs');
+import * as bcrypt from 'bcryptjs';
 
 /**
  * 加密。加上前缀{bcrypt}，为了兼容多种加密算法，这里暂时只实现bcrypt算法
