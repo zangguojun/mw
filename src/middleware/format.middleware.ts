@@ -2,6 +2,7 @@ import { IMiddleware } from '@midwayjs/core';
 import { Middleware } from '@midwayjs/decorator';
 import { Context, NextFunction } from '@midwayjs/koa';
 import { BaseCode } from '../common/base.error';
+import { IRst } from '../interface';
 
 /**
  * 对接口返回的数据统一包装
@@ -13,7 +14,7 @@ export class FormatMiddleware implements IMiddleware<Context, NextFunction> {
   }
 
   resolve() {
-    return async (ctx: Context, next: NextFunction) => {
+    return async (ctx: Context, next: NextFunction): Promise<IRst<any>> => {
       const result = await next();
       return { code: BaseCode.OK, msg: 'OK', success: true, data: result };
     };

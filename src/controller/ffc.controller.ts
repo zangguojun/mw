@@ -1,8 +1,7 @@
 import { Context } from '@midwayjs/koa';
 import {
+  Body,
   Controller,
-  Fields,
-  Files,
   Get,
   Inject,
   Post,
@@ -11,6 +10,7 @@ import {
 import { QueueService } from '@midwayjs/task';
 import { FFCreatorCenter } from 'ffcreator';
 import { FFCService } from '../service/ffc.service';
+import { IFFCBody, IFFCProgress } from '../interface';
 
 @Controller('/ffc')
 export class HomeController {
@@ -37,37 +37,28 @@ export class HomeController {
     return 'success';
   }
 
-  /**
-   *
-   * @param files
-   *  filename: 文件原名
-   *  data: mode 为 file 时为服务器临时文件地址
-   *  fieldname: 表单 field 名
-   *  mimeType: mime
-   * @param fields
-   */
-  @Post('/upload')
-  async upload(@Files() files, @Fields() fields) {
-    const { id } = fields;
-    console.log('🚀 ~ src/controller/ffc.controller.ts 52 🍪files🍪', files);
-    const taskId = FFCreatorCenter.addTaskByTemplate(id, {
-      image: files[0].data,
-    });
-    this.ctx.redirect(`/ffc/progress?taskId=${taskId}`);
-    // return { msg: '发送成功，视频加工中...', data: { taskId } };
+  @Post('/create')
+  async upload(@Body() body: IFFCBody) {
+    const { id, images } = body;
+    const taskId = FFCreatorCenter.addTaskByTemplate(id, { images });
+    return {
+      taskId,
+      url: `ffc/progress?taskId=${taskId}`,
+    };
   }
 
   @Get('/progress')
   async progress(@Query('taskId') taskId: string) {
-    const progress = FFCreatorCenter.getProgress(taskId);
-    const state = FFCreatorCenter.getTaskState(taskId);
-    if (state === 'complete') {
-      const file = FFCreatorCenter.getResultFile(taskId);
-      return this.ctx.render('videoShow', { file });
+    return this.ffcService.progress({ taskId });
+  }
+
+  @Get('/getTaskFile')
+  async getTaskFile(@Query('taskId') taskId: string) {
+    const rst: IFFCProgress = await this.ffcService.progress({ taskId });
+    if (rst.state !== 'complete') {
+      return rst;
     }
-    return {
-      msg: `${taskId}进度为${progress}`,
-      data: { progress, taskId, state },
-    };
+    const file = FFCreatorCenter.getResultFile(taskId);
+    return { ...rst, progress: 100, file };
   }
 }

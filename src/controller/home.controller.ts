@@ -1,5 +1,12 @@
 import { Context } from '@midwayjs/koa';
-import { Controller, Get, Inject, Query } from '@midwayjs/decorator';
+import {
+  Controller,
+  Files,
+  Get,
+  Inject,
+  Post,
+  Query,
+} from '@midwayjs/decorator';
 import { QueueService } from '@midwayjs/task';
 import { ProgressTask } from '../task/progress.task';
 
@@ -25,6 +32,21 @@ export class HomeController {
 
   @Get('/get-queue')
   async getQueue(@Query('id') id: string) {
-    return await this.queueService.getClassQueue(ProgressTask).getJob(id);
+    return this.queueService.getClassQueue(ProgressTask).getJob(id);
+  }
+
+  /**
+   * @param files
+   *  filename: 文件原名
+   *  data: mode 为 file 时为服务器临时文件地址
+   *  fieldname: 表单 field 名
+   *  mimeType: mime
+   */
+  @Post('/upload')
+  async upload(@Files() files) {
+    const [file] = files;
+    const n = file?.data?.split('/');
+    file.url = n.slice(n.length - 3).join('/');
+    return file;
   }
 }
