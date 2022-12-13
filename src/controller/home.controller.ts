@@ -4,7 +4,11 @@ import {
   Get,
   Inject,
 } from '@midwayjs/decorator';
+import * as ReactDOMServer from 'react-dom/server';
+import * as React from 'react';
 import { QueueService } from '@midwayjs/task';
+
+import App from "../../view/app";
 
 @Controller('/')
 export class HomeController {
@@ -23,6 +27,6 @@ export class HomeController {
 
   @Get('/hello')
   async hello(): Promise<string> {
-    return 'hello world';
+    return ReactDOMServer.renderToString(React.createElement(App, null));
   }
 }
