@@ -23,6 +23,7 @@
     "@midwayjs/upload": "^3.9.0",
     "@midwayjs/validate": "^3.9.0",
     "@midwayjs/view-ejs": "^3.9.0",
+    "@midwayjs/oss": "^3.9.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",

@@ -11,6 +11,7 @@ import * as crossDomain from '@midwayjs/cross-domain';
 import * as task from '@midwayjs/task';
 import * as redis from '@midwayjs/redis';
 import * as axios from '@midwayjs/axios';
+import * as oss from '@midwayjs/oss';
 import * as dotenv from 'dotenv';
 import * as lodash from 'lodash';
 import * as jwt from '@midwayjs/jwt';
@@ -42,6 +43,7 @@ dotenv.config();
     jwt,
     passport,
     upload,
+    oss,
     // {
     //   component: swagger,
     //   enabledEnvironment: ['local'],

@@ -115,4 +115,13 @@ export default {
     // base64: boolean，设置原始body是否是base64格式，默认为false，一般用于腾讯云的兼容
     base64: false,
   },
+  oss: {
+    client: {
+      accessKeyId: process.env.ACCESS_KEY_ID,
+      accessKeySecret: process.env.ACCESS_KEY_SECRET,
+      bucket: 'zangguojun-daily',
+      endpoint: 'oss-cn-hangzhou.aliyuncs.com',
+      timeout: '60s',
+    },
+  },
 } as MidwayConfig;

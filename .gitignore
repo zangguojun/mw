@@ -13,5 +13,6 @@ run/
 *.un~
 .tsbuildinfo
 .tsbuildinfo.*
+.env
 public/result
 public/upload
