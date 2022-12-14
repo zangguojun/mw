@@ -8,7 +8,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import * as React from 'react';
 import { QueueService } from '@midwayjs/task';
 
-import App from "../../view/app";
+import Dom from "../template";
 
 @Controller('/')
 export class HomeController {
@@ -27,6 +27,6 @@ export class HomeController {
 
   @Get('/hello')
   async hello(): Promise<string> {
-    return ReactDOMServer.renderToString(React.createElement(App, null));
+    return ReactDOMServer.renderToString(React.createElement(Dom, null));
   }
 }
